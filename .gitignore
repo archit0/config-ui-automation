@@ -1,0 +1,8 @@
+env/
+env3/
+venv3/
+
+.idea/
+
+steps.cfg
+*.pyc
