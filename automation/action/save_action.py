@@ -21,6 +21,7 @@ class SaveActionProcessor(ActionProcessor):
         func_name = f'find_element_by_{location_type}'
         data = get_till_available(self.automation_processor.driver, 10, func_name, location)
         if not data:
-            print("\tData not Found")
+            print("\t\tData not Found")
         else:
-            print(f"\tData= {data.text}")
+            print(f"\t\tData: {data.text}")
+            self.automation_processor.context[variable_name] = data.text

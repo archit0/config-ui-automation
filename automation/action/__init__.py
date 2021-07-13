@@ -6,3 +6,4 @@ from .type_action import TypeActionProcessor
 from .wait_for_element_action import WaitForElementProcessor
 from .wait_till_url_action import WaitForUrlProcessor
 from .save_action import SaveActionProcessor
+from .compare_action import CompareActionProcessor

@@ -26,6 +26,7 @@ class AutomationProcessor:
 
     def extract_variables(self, command):
         variables = re.findall("\s\$(.*?)\$", command)
+        # TODO Replace toggling off for certain action
         # If variable is actually a variable
         processed_variables = []
         for each in variables:
