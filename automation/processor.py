@@ -1,7 +1,7 @@
 import re
 import time
 from selenium import webdriver
-from automation.validation.action import ActionProcessor
+from automation.action import ActionProcessor
 
 ACTION_MAPPING = {}
 

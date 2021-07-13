@@ -9,9 +9,9 @@ def get_till_available(driver, times, attribute, *args, **kwargs):
                 return ele
         except:
             pass
-        print(f"\t\tTry {i + 1} failed {attribute} {args} {kwargs}")
+        # print(f"\t\tTry {i + 1} failed {attribute} {args} {kwargs}")
         time.sleep(1)
-    raise Exception(f"Element couldnt be find {attribute} {args} {kwargs}")
+    raise Exception(f"Element couldn't be find {attribute} {args} {kwargs}")
 
 
 def wait_till_this_url(driver, url, times=10, sleep_sec=1):
