@@ -100,3 +100,9 @@ file = '../steps.cfg'
 
 driver = AutomationProcessor(file, None)
 driver.process_action_file()
+import atexit
+
+def exit_handler():
+    driver.driver.close()
+
+atexit.register(exit_handler)
