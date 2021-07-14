@@ -26,11 +26,10 @@ class AutomationProcessor:
 
     def extract_variables(self, command):
         variables = re.findall("\s\$(.*?)\$", command)
-        is_skip_command = command.strip().lower().startswith("save_data ") or command.strip().lower().startswith("set ")
         # If variable is actually a variable
         processed_variables = []
         for each in variables:
-            if each in self.context and not is_skip_command:
+            if each in self.context:
                 processed_variables.append(self.context[each])
             else:
                 processed_variables.append(each)
