@@ -12,4 +12,4 @@ class WaitProcessor(ActionProcessor):
 
     def process(self):
         time_to_wait = self.variables[0]
-        time.sleep(time_to_wait)
+        time.sleep(int(time_to_wait))

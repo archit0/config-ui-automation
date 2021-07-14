@@ -23,5 +23,5 @@ class SaveActionProcessor(ActionProcessor):
         if not data:
             print("\t\tData not Found")
         else:
-            print(f"\t\tData: {data.text}")
+            print(f"\t\tDATA: {data.text}")
             self.automation_processor.context[variable_name] = data.text
