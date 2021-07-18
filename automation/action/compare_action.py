@@ -19,4 +19,5 @@ class CompareActionProcessor(ActionProcessor):
         query_output = eval(query)
         print(f"\t\tQuery: {query}")
         print(f"\t\tResult: {query_output}")
+        self.automation_processor.results.append([self.block_name, query, query_output])
 

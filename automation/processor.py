@@ -23,6 +23,7 @@ class AutomationProcessor:
         self.context = {}
         self.action_file = action_file
         self.custom_object = custom_object
+        self.results = []
 
     def extract_variables(self, command):
         variables = re.findall("\s\$(.*?)\$", command)
@@ -57,7 +58,7 @@ class AutomationProcessor:
             if not command_class:
                 raise Exception(f"Invalid command. {each_line}")
             variables = self.extract_variables(each_line)
-            command_class_obj = command_class(self, variables)
+            command_class_obj = command_class(self, variables, name)
             success, message = command_class_obj.validate()
             if not success:
                 raise Exception(f"Command failed: [{each_line}]. Message: [{message}]")
@@ -70,6 +71,7 @@ class AutomationProcessor:
         blocks = self.group_blocks(lines)
         for each_block in blocks:
             self.process_block(each_block['name'], each_block['commands'])
+        print(self.results)
 
 
 class AutomationDriverUtils:
