@@ -4,6 +4,7 @@ from automation.utils import get_till_available
 
 class SaveActionProcessor(ActionProcessor):
     __COMMAND__ = "SAVE_DATA"
+    IGNORE_VARIABLE_REPLACEMENT = [0]
 
     def validate(self):
         if not 2 <= len(self.variables) <= 3:

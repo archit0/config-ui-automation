@@ -3,6 +3,7 @@ from .action import ActionProcessor
 
 class SetVariableActionProcessor(ActionProcessor):
     __COMMAND__ = "SET"
+    IGNORE_VARIABLE_REPLACEMENT = [0]
 
     def validate(self):
         if len(self.variables) != 2:

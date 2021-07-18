@@ -2,6 +2,7 @@ import re
 import time
 from selenium import webdriver
 from automation.action import ActionProcessor
+from automation.constants import CommandConstants
 
 ACTION_MAPPING = {}
 
@@ -9,7 +10,8 @@ ACTION_MAPPING = {}
 def load_actions():
     subclasses = ActionProcessor.__subclasses__()
     for each_subclass in subclasses:
-        ACTION_MAPPING[each_subclass.__COMMAND__.lower()] = each_subclass
+        command_name = getattr(each_subclass, CommandConstants.COMMAND_VAR)
+        ACTION_MAPPING[command_name.lower()] = each_subclass
 
 
 load_actions()
@@ -25,12 +27,16 @@ class AutomationProcessor:
         self.custom_object = custom_object
         self.results = []
 
-    def extract_variables(self, command):
-        variables = re.findall("\s\$(.*?)\$", command)
+    def extract_variables(self, command, command_class):
+        variables = re.findall(f"\s\{CommandConstants.TEMPLATE_PREFIX}(.*?)\{CommandConstants.TEMPLATE_PREFIX}", command)
         # If variable is actually a variable
         processed_variables = []
-        for each in variables:
-            if each in self.context:
+        if hasattr(command_class, CommandConstants.IGNORE_VARIABLE_REPLACEMENT):
+            ignore_set_indexes = getattr(command_class, CommandConstants.IGNORE_VARIABLE_REPLACEMENT)
+        else:
+            ignore_set_indexes = []
+        for idx, each in enumerate(variables):
+            if each in self.context and idx not in ignore_set_indexes:
                 processed_variables.append(self.context[each])
             else:
                 processed_variables.append(each)
@@ -38,9 +44,11 @@ class AutomationProcessor:
 
     def group_blocks(self, lines):
         blocks = []
-        for match in re.finditer("BLOCK\s{1,}START\s\$(.*)\$", lines, re.MULTILINE):
+        # "BLOCK\s{1,}START\s\$(.*)\$"
+        rgx = f"{CommandConstants.BLOCK_START}\s\{CommandConstants.TEMPLATE_PREFIX}(.*)\{CommandConstants.TEMPLATE_PREFIX}"
+        for match in re.finditer(rgx, lines, re.MULTILINE):
             block_name = match.group(1)
-            end_block_line = lines.find("BLOCK END", match.end() + 1)
+            end_block_line = lines.find(CommandConstants.BLOCK_END, match.end() + 1)
             commands = lines[match.end() + 1: end_block_line]
             blocks.append({"name": block_name, "commands": commands.strip().split("\n")})
         return blocks
@@ -57,7 +65,7 @@ class AutomationProcessor:
             command_class = ACTION_MAPPING.get(command_start.lower())
             if not command_class:
                 raise Exception(f"Invalid command. {each_line}")
-            variables = self.extract_variables(each_line)
+            variables = self.extract_variables(each_line, command_class)
             command_class_obj = command_class(self, variables, name)
             success, message = command_class_obj.validate()
             if not success:
@@ -104,7 +112,9 @@ driver = AutomationProcessor(file, None)
 driver.process_action_file()
 import atexit
 
+
 def exit_handler():
     driver.driver.close()
+
 
 atexit.register(exit_handler)
