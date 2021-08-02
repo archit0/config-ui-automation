@@ -28,7 +28,7 @@ class AutomationProcessor:
         self.results = []
 
     def extract_variables(self, command, command_class):
-        variables = re.findall(f"\s\{CommandConstants.TEMPLATE_PREFIX}(.*?)\{CommandConstants.TEMPLATE_PREFIX}", command)
+        variables = re.findall(f"\s\{CommandConstants.TEMPLATE_PREFIX}(.+?)\{CommandConstants.TEMPLATE_PREFIX}", command)
         # If variable is actually a variable
         processed_variables = []
         if hasattr(command_class, CommandConstants.IGNORE_VARIABLE_REPLACEMENT):
