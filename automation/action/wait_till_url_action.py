@@ -11,6 +11,6 @@ class WaitForUrlProcessor(ActionProcessor):
         return True, None
 
     def process(self):
-        url = self.variables[0]
-        time = self.variables[1]
+        time = self.variables[0]
+        url = self.variables[1]
         wait_till_this_url(self.automation_processor.driver, url, time)
