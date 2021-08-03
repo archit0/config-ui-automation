@@ -28,7 +28,8 @@ class AutomationProcessor:
         self.results = []
 
     def extract_variables(self, command, command_class):
-        variables = re.findall(f"\s\{CommandConstants.TEMPLATE_PREFIX}(.+?)\{CommandConstants.TEMPLATE_PREFIX}", command)
+        variables = re.findall(f"\s\{CommandConstants.TEMPLATE_PREFIX}(.+?)\{CommandConstants.TEMPLATE_PREFIX}",
+                               command)
         # If variable is actually a variable
         processed_variables = []
         if hasattr(command_class, CommandConstants.IGNORE_VARIABLE_REPLACEMENT):
@@ -79,7 +80,7 @@ class AutomationProcessor:
         blocks = self.group_blocks(lines)
         for each_block in blocks:
             self.process_block(each_block['name'], each_block['commands'])
-        print(self.results)
+        return self.results
 
 
 class AutomationDriverUtils:
@@ -96,7 +97,7 @@ class AutomationDriverUtils:
                 pass
             print(f"\t\tTry {i + 1} failed {attribute} {args} {kwargs}")
             time.sleep(1)
-        raise Exception(f"Element couldnt be find {attribute} {args} {kwargs}")
+        raise Exception(f"Element couldn't be find {attribute} {args} {kwargs}")
 
     def wait_till_this_url(self, url, times=10, sleep_sec=1):
         for i in range(0, times):
@@ -105,16 +106,3 @@ class AutomationDriverUtils:
             time.sleep(sleep_sec)
         raise Exception("Didnt reach the url")
 
-
-file = '../steps.cfg'
-
-driver = AutomationProcessor(file, None)
-driver.process_action_file()
-import atexit
-
-
-def exit_handler():
-    driver.driver.close()
-
-
-atexit.register(exit_handler)
