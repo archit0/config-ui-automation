@@ -24,6 +24,7 @@ for each in files:
         driver = AutomationProcessor(file_path, None)
         print("Processing file: {}", file_path)
         print("*" * 100)
+        results = []
         try:
             results = driver.process_action_file()
         except Exception as e:
