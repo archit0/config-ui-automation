@@ -3,7 +3,8 @@ env3/
 venv3/
 
 .idea/
-
+step.cfg
+steps_old.cfg
 steps/*
 results/
 *.pyc
