@@ -6,6 +6,6 @@ venv/
 .idea/
 step.cfg
 steps_old.cfg
-steps/*
+tests/*
 results/
 *.pyc
