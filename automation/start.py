@@ -4,9 +4,9 @@ import csv
 from automation.processor import AutomationProcessor
 
 # report_folder = input("Enter Folder Name(default=steps): ")
-report_folder = "steps"
+report_folder = "tests"
 if not report_folder:
-    report_folder = "steps"
+    report_folder = "tests"
 
 output_folder = "results"
 try:

@@ -105,4 +105,3 @@ class AutomationDriverUtils:
                 return True
             time.sleep(sleep_sec)
         raise Exception("Didnt reach the url")
-
