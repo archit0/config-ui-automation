@@ -1,6 +1,7 @@
 env/
 env3/
 venv3/
+venv/
 
 .idea/
 step.cfg
